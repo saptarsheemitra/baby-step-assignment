@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Pagination from "./Pagination";
+// import Pagination from "./Pagination";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import "../App.css";
@@ -109,12 +109,12 @@ const UserList = () => {
               </Table>
             </div>
           </>
-          <Pagination
+          {/* <Pagination
             totalUsers={filteredUsers.length}
             usersPerPage={usersPerPage}
             currentPage={currentPage}
             onPageChange={handlePageChange}
-          />
+          /> */}
         </>
       )}
     </>
