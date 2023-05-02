@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import UserList from './components/UserList';
 import UserDetails from './components/UserDetails';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
