@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
-import User from "./UserDetails";
-import Pagination from "./pagination";
-import "../App.css";
+import { Link } from "react-router-dom";
+import Pagination from "./Pagination";
 import Table from "react-bootstrap/Table";
+import Spinner from "react-bootstrap/Spinner";
+import "../App.css";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -18,7 +18,7 @@ const UserList = () => {
       const res = await fetch("https://jsonplaceholder.typicode.com/users");
       const data = await res.json();
       setUsers(data);
-      setLoading(false);
+        setLoading(false);
     };
     fetchUsers();
   }, []);
@@ -30,9 +30,6 @@ const UserList = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  const handleRedirectUser = () => {
-    console.log("Working")
-  }
 
   // Get current users
   const indexOfLastUser = currentPage * usersPerPage;
@@ -49,6 +46,7 @@ const UserList = () => {
 
   return (
     <>
+      <h1 className="text-center my-5">All User Details</h1>
       <div className="input-container font-weight-bold">
         <div className="form-group search-input-cus">
           <label
@@ -59,17 +57,24 @@ const UserList = () => {
           </label>
           <input
             type="text"
-            className="search-input-field form-control "
+            className="form-control "
             id="search-field"
             placeholder="Search by name or email"
             value={searchTerm}
-        onChange={handleSearch}
+            onChange={handleSearch}
           />
         </div>
       </div>
 
       {loading ? (
-        <p>Loading users...</p>
+        <>
+          <div className="loading">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+            <div className="loading-text">Loading users...</div>
+          </div>
+        </>
       ) : (
         <>
           <>
@@ -87,20 +92,24 @@ const UserList = () => {
                 </thead>
                 <tbody>
                   {currentUsers.map((user) => (
-                    <tr  key={user.id} onClick={handleRedirectUser}>
-                      <td >{user.name}</td>
-                      <td >{user.username}</td>
-                      <td >{user.email}</td>
-                      <td >{user.phone}</td>
-                      <td >{user.website}</td>
-                      <td >{user.company.name}</td>
-                        </tr>
+                    <tr key={user.id}>
+                      <td>
+                        <Link to={`/user/${user.id}`} className="text-dec">
+                          {user.name}
+                        </Link>
+                      </td>
+                      <td>{user.username}</td>
+                      <td>{user.email}</td>
+                      <td>{user.phone}</td>
+                      <td>{user.website}</td>
+                      <td>{user.company.name}</td>
+                    </tr>
                   ))}
                 </tbody>
               </Table>
-            </div> 
+            </div>
           </>
-           <Pagination
+          <Pagination
             totalUsers={filteredUsers.length}
             usersPerPage={usersPerPage}
             currentPage={currentPage}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import Spinner from "react-bootstrap/Spinner";
 
 const UserDetails = () => {
   const { id } = useParams();
@@ -11,7 +12,6 @@ const UserDetails = () => {
     const fetchUser = async () => {
       setLoading(true);
       const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
-      // const res = await fetch(`https://jsonplaceholder.typicode.com/users/10`);
       const data = await res.json();
       setUser(data);
       setLoading(false);
@@ -24,8 +24,11 @@ const UserDetails = () => {
     <div className="container">
       {loading ? (
         <div className="loading">
-          <p className="loading-text">Loading...</p>
-        </div>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+        <div className="loading-text">Loading user details...</div>
+      </div>
       ) : (
         <>
           <div className="p-5">
